@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataset": {
-						"referenceName": "ds_blob_source_csv",
+						"referenceName": "metadatasource",
 						"type": "DatasetReference"
 					},
 					"fieldList": [
@@ -32,7 +32,7 @@
 				}
 			},
 			{
-				"name": "ForEach1",
+				"name": "ForEach",
 				"type": "ForEach",
 				"dependsOn": [
 					{
@@ -101,7 +101,7 @@
 									"type": "DatasetReference",
 									"parameters": {
 										"p_filename": {
-											"value": "@activity('Get Metadata').output.itemName",
+											"value": "@item().name",
 											"type": "Expression"
 										}
 									}
@@ -112,15 +112,68 @@
 									"referenceName": "ds_adls_raw_csv",
 									"type": "DatasetReference",
 									"parameters": {
-										"p_filename": {
-											"value": "@activity('Get Metadata').output.itemName",
-											"type": "Expression"
-										}
+										"p_filename": "@item().name"
 									}
 								}
 							]
 						}
 					]
+				}
+			},
+			{
+				"name": "Web alerts - success",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ForEach",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-28.northcentralus.logic.azure.com:443/workflows/ad1d639881fb472481f3d5eacd748a8b/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=b9jZc_1YY3ilWgUeowgZ57eJh3iYnYesUUhqISDYMeo",
+					"body": {
+						"value": "{\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"status\": \"Succeeded\",\n    \"runId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcNow()}\"\n}",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "Web alerts - fail",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "ForEach",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"method": "POST",
+					"url": "https://prod-28.northcentralus.logic.azure.com:443/workflows/ad1d639881fb472481f3d5eacd748a8b/triggers/When_an_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_an_HTTP_request_is_received%2Frun&sv=1.0&sig=b9jZc_1YY3ilWgUeowgZ57eJh3iYnYesUUhqISDYMeo",
+					"body": {
+						"value": "{\n    \"pipelineName\": \"@{pipeline().Pipeline}\",\n    \"status\": \"Fail\",\n    \"runId\": \"@{pipeline().RunId}\",\n    \"time\": \"@{utcNow()}\"\n}",
+						"type": "Expression"
+					}
 				}
 			}
 		],

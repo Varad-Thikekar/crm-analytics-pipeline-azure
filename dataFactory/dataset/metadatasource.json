@@ -1,21 +1,15 @@
 {
-	"name": "ds_blob_source_csv",
+	"name": "metadatasource",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureBlobStorage1",
 			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"p_filename": {
-				"type": "string"
-			}
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "@dataset().p_filename",
 				"container": "source-data"
 			},
 			"columnDelimiter": ",",
