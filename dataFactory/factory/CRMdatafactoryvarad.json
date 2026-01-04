@@ -1,0 +1,9 @@
+{
+	"name": "CRMdatafactoryvarad",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "9efd6f28-ed78-4750-9a38-af1145c4124b",
+		"tenantId": "4c909c55-9407-475a-8081-2958c0f5986c"
+	}
+}
