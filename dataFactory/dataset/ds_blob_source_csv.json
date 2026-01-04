@@ -1,0 +1,60 @@
+{
+	"name": "ds_blob_source_csv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"p_filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": {
+					"value": "@dataset().p_filename",
+					"type": "Expression"
+				},
+				"container": "source-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "account",
+				"type": "String"
+			},
+			{
+				"name": "sector",
+				"type": "String"
+			},
+			{
+				"name": "year_established",
+				"type": "String"
+			},
+			{
+				"name": "revenue",
+				"type": "String"
+			},
+			{
+				"name": "employees",
+				"type": "String"
+			},
+			{
+				"name": "office_location",
+				"type": "String"
+			},
+			{
+				"name": "subsidiary_of",
+				"type": "String"
+			}
+		]
+	}
+}
