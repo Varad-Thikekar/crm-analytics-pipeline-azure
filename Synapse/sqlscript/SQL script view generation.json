@@ -1,0 +1,17 @@
+{
+	"name": "SQL script view generation",
+	"properties": {
+		"content": {
+			"query": "`CREATE VIEW dbo.vAccounts as\nselect *\nfrom OPENROWSET(\n    Bulk 'https://crmstorageaccountvarad.blob.core.windows.net/transformed-data/accounts.csv/part-00000-tid-6957520617651465466-043a9b57-4864-4f27-8521-ffb02593116b-24-1-c000.csv',\n    format = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = True\n) as rows;\n\nCREATE VIEW dbo.vProducts as\nselect *\nfrom OPENROWSET(\n    Bulk 'https://crmstorageaccountvarad.blob.core.windows.net/transformed-data/products.csv/part-00000-tid-3929739646981508046-0e1f3b71-cb0e-4c08-8727-58afdae4adfd-26-1-c000.csv',\n    format = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = True\n) as rows;\n\nCREATE VIEW dbo.vSales_teams as\nselect *\nfrom OPENROWSET(\n    Bulk 'https://crmstorageaccountvarad.blob.core.windows.net/transformed-data/sales_teams.csv/part-00000-tid-7721705867378035141-5d23dce6-4343-426a-a16f-542cd8979641-28-1-c000.csv',\n    format = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = True\n) as rows;\n\nCREATE VIEW dbo.vSales_pipeline as\nselect *\nfrom OPENROWSET(\n    Bulk 'https://crmstorageaccountvarad.blob.core.windows.net/transformed-data/sales_pipeline.csv/part-00000-tid-3729935706195361896-df1dc562-18a8-4815-9262-1922511fa3c7-27-1-c000.csv',\n    format = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = True\n) as rows;\n\nCREATE VIEW dbo.vData_dictionary as\nselect *\nfrom OPENROWSET(\n    Bulk 'https://crmstorageaccountvarad.blob.core.windows.net/transformed-data/data_dictionary.csv/part-00000-tid-6428703079613885390-7c8a6a42-42b3-4422-a4ae-1d2b9176501f-25-1-c000.csv',\n    format = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = True,\n    fieldterminator = ',',\n    fieldquote = ''\n) as rows;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "crmsales",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

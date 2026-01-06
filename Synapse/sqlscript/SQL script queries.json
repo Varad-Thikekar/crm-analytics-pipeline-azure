@@ -1,0 +1,17 @@
+{
+	"name": "SQL script queries",
+	"properties": {
+		"content": {
+			"query": "select sales_agent, close_value\nfrom dbo.vSales_pipeline\nwhere close_value>2000\nORDER by close_value desc;\n\nselect product, close_value\nfrom dbo.vSales_pipeline\norder by close_value desc;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "crmsales",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
